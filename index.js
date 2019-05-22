@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const request = require('request');
 
 const app = express()
-const port = 4000
+const port = process.env.PORT || 4000
 
 app.use(bodyParser.json());
 
@@ -19,6 +19,8 @@ app.get('/authorize', (req, res) => {
 
 app.post('/unsplash', (req, res) => {
   console.log(req.body);
+
+  // add postgress db to store access token
 
   // if(expired) {
   //   refreshToken()
