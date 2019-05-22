@@ -29,7 +29,7 @@ app.post('/unsplash', (req, res) => {
   // }
 
   function getPhoto() {
-    request(`https://api.unsplash.com/photos/random?query=${req.body.payload.cmd}&client_id=${process.env.unsplash_client_id}`, (error, body) => {
+    request(`https://api.unsplash.com/photos/random?query=${req.body.payload.cmd}&orientation=landscape&client_id=${process.env.unsplash_client_id}`, (error, body) => {
       if(error) {
         console.log(error);
       } else {
