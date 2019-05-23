@@ -1,6 +1,6 @@
 {
-  "name": "Unsplash",
-  "description": "An Unsplash Integration for Zoom Chat Bot",
+  "name": "Unsplash Chat Bot",
+  "description": "An Unsplash Bot for Zoom Chat",
   "repository": "https://github.com/tommygaessler/unsplash-chat-bot",
   "logo": "https://unsplash.com/assets/core/logo-black-df2168ed0c378fa5506b1816e75eb379d06cfcd0af01e07a2eb813ae9b5d7405.svg",
   "keywords": ["node", "express", "unsplash", "zoom"],
@@ -10,22 +10,22 @@
   "env": {
     "unsplash_client_id": {
       "description": "Your Unsplash client_id",
-      "value": "client_id",
+      "value": "",
       "required": true
     },
     "zoom_client_id": {
       "description": "Your Zoom client_id",
-      "value": "client_id",
+      "value": "",
       "required": true
     },
     "zoom_client_secret": {
       "description": "Your Zoom client_secret",
-      "value": "client_secret",
+      "value": "",
       "required": true
     },
     "zoom_robot_jid": {
       "description": "Your Zoom robot_jid",
-      "value": "robot_jid",
+      "value": "",
       "required": true
     },
     "zoom_verification_code": {
