@@ -68,13 +68,13 @@ app.post('/unsplash', (req, res) => {
                   "type": "attachments",
                   "img_url": body.urls.regular,
                   "resource_url": body.links.html,
-                  "ext": "png",
+                  // "ext": "png",
                   "information": {
                     "title": {
                       "text": "Photo by " + body.user.name
                     },
                     "description": {
-                      "text": "Tap to view on unsplash.com"
+                      "text": "Click to view on unsplash.com"
                     }
                   }
                 }
