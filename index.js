@@ -74,7 +74,7 @@ app.post('/unsplash', (req, res) => {
                       "text": "Photo by " + body.user.name
                     },
                     "description": {
-                      "text": "Click to view on unsplash.com"
+                      "text": "Click to view on Unsplash"
                     }
                   }
                 }
@@ -108,6 +108,7 @@ app.post('/unsplash', (req, res) => {
       "Content-Type": "application/json",
       "Authorization": "Bearer " + zoom_access_token
     }}, (error, httpResponse, body) => {
+      console.log(body);
       if (error) {
         res.send('Error sending chat')
         console.log(error);
