@@ -66,7 +66,7 @@ app.post('/unsplash', (req, res) => {
               "sections": [
                 {
                   "type": "attachments",
-                  "img_url": body.urls.medium,
+                  "img_url": body.urls.regular,
                   "resource_url": body.links.html,
                   "ext": "png",
                   "information": {
