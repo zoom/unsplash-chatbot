@@ -46,7 +46,6 @@ app.post('/unsplash', (req, res) => {
 
   function getPhoto(zoom_access_token) {
     request(`https://api.unsplash.com/photos/random?query=${req.body.payload.cmd}&orientation=landscape&client_id=${process.env.unsplash_client_id}`, (error, body) => {
-      console.log(body);
       if(error) {
         console.log(error);
         res.send('Error in getting photo')
@@ -112,7 +111,6 @@ app.post('/unsplash', (req, res) => {
       "Content-Type": "application/json",
       "Authorization": "Bearer " + zoom_access_token
     }}, (error, httpResponse, body) => {
-      console.log(body);
       if (error) {
         res.send('Error sending chat')
         console.log(error);
