@@ -22,12 +22,10 @@ app.get('/', (req, res) => {
 })
 
 app.get('/authorize', (req, res) => {
-  // try to open app? Or add text saying to open app
-  res.send('Thanks for installing Unsplash!')
+  res.send('Thanks for installing Unsplash! Open Zoom Chat and type "/unsplash mountains" in a channel to see a photo of mountains!')
 })
 
 app.post('/unsplash', (req, res) => {
-  console.log(req.body);
 
   pg.query('SELECT * FROM access_token', (error, results) => {
     if (error) {
@@ -35,10 +33,8 @@ app.post('/unsplash', (req, res) => {
       res.send('Error in access_token query')
     } else {
       if(results.rows[0].expires_on > (new Date().getTime() / 1000)) {
-        console.log('token good');
         getPhoto(results.rows[0].access_token)
       } else {
-        console.log('token expired');
         refreshToken()
       }
     }
@@ -75,10 +71,10 @@ app.post('/unsplash', (req, res) => {
                   "ext": "png",
                   "information": {
                     "title": {
-                      "text": body.user.name
+                      "text": "Photo by " + body.user.name
                     },
                     "description": {
-                      "text": "@" + body.user.username
+                      "text": "Tap to view on unsplash.com"
                     }
                   }
                 }
@@ -92,6 +88,7 @@ app.post('/unsplash', (req, res) => {
   }
 
   function sendChat(chatBody, zoom_access_token) {
+
     request({
       url:'https://api.zoom.us/v2/im/chat/messages',
       method: 'POST',
@@ -102,7 +99,7 @@ app.post('/unsplash', (req, res) => {
       "account_id": req.body.payload.accountId,
       "content": {
         "head": {
-          "text": "Unsplash"
+          "text": "/unsplash " + req.body.payload.cmd
         },
         "body": chatBody
       }
