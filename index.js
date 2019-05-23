@@ -3,6 +3,15 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const request = require('request');
 
+const { Client } = require('pg');
+
+const pg = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: process.env.NODE_ENV ? true : false,
+});
+
+pg.connect();
+
 const app = express()
 const port = process.env.PORT || 4000
 
@@ -20,18 +29,26 @@ app.get('/authorize', (req, res) => {
 app.post('/unsplash', (req, res) => {
   console.log(req.body);
 
-  // add postgress db to store access token
+  pg.query('SELECT * FROM access_token', (error, results) => {
+    if (error) {
+      console.log(error);
+      res.send('Error in access_token query')
+    } else {
+      if(results.rows[0].expires_on > (new Date().getTime() / 1000)) {
+        console.log('token good');
+        getPhoto(results.rows[0].access_token)
+      } else {
+        console.log('token expired');
+        refreshToken()
+      }
+    }
+  })
 
-  // if(expired) {
-  //   refreshToken()
-  // } else {
-    getPhoto()
-  // }
-
-  function getPhoto() {
+  function getPhoto(zoom_access_token) {
     request(`https://api.unsplash.com/photos/random?query=${req.body.payload.cmd}&orientation=landscape&client_id=${process.env.unsplash_client_id}`, (error, body) => {
       if(error) {
         console.log(error);
+        res.send('Error in getting photo')
       } else {
         body = JSON.parse(body.body)
         if(body.errors) {
@@ -44,7 +61,7 @@ app.post('/unsplash', (req, res) => {
               })
             }
           ]
-          sendChat(errors)
+          sendChat(errors, zoom_access_token)
         } else {
           var photo = [
             {
@@ -68,13 +85,13 @@ app.post('/unsplash', (req, res) => {
               ]
             }
           ]
-          sendChat(photo);
+          sendChat(photo, zoom_access_token);
         }
       }
     })
   }
 
-  function sendChat(chatBody) {
+  function sendChat(chatBody, zoom_access_token) {
     request({
       url:'https://api.zoom.us/v2/im/chat/messages',
       method: 'POST',
@@ -92,13 +109,13 @@ app.post('/unsplash', (req, res) => {
     },
     headers: {
       "Content-Type": "application/json",
-      "Authorization": "Bearer " + process.env.zoom_access_token
+      "Authorization": "Bearer " + zoom_access_token
     }}, (error, httpResponse, body) => {
-      console.log(body);
       if (error) {
+        res.send('Error sending chat')
         console.log(error);
       } else {
-
+        res.send('Chat sent successfully')
       }
     });
   }
@@ -108,22 +125,23 @@ app.post('/unsplash', (req, res) => {
       url:`https://api.zoom.us/oauth/token?grant_type=client_credentials&client_id=${process.env.zoom_client_id}&client_secret=${process.env.zoom_client_secret}`,
       method: 'POST'
     }, (error, httpResponse, body) => {
-      console.log(body);
       if (error) {
         console.log(error);
+        res.send('Error refreshing token')
       } else {
-        // update access_token and expires on
-        getPhoto()
+        body = JSON.parse(body);
+
+        pg.query(`UPDATE access_token SET access_token = '${body.access_token}', expires_on = ${(new Date().getTime() / 1000) + body.expires_in}`, (error, results) => {
+          if (error) {
+            console.log(error);
+            res.send('Error setting access_token')
+          } else {
+            getPhoto(body.access_token)
+          }
+        })
       }
     });
   }
-
-  // check if access_token is expired
-
-  // find photo
-  // send photo
-
-  res.send('Got a POST request')
 })
 
 app.get('/support', (req, res) => {
