@@ -18,11 +18,11 @@ const port = process.env.PORT || 4000
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-  res.send('Welcome to the Zoom Unsplash Chat Bot!')
+  res.send('Welcome to the Unsplash Bot for Zoom Chat!')
 })
 
 app.get('/authorize', (req, res) => {
-  res.send('Thanks for installing Unsplash! Open Zoom Chat and type "/unsplash mountains" in a channel to see a photo of mountains!')
+  res.send('Thanks for installing the Unsplash Bot for Zoom Chat!')
 })
 
 app.post('/unsplash', (req, res) => {
@@ -62,7 +62,7 @@ app.post('/unsplash', (req, res) => {
           var photo = [
             {
               "type": "section",
-              "sidebar_color": "#000000",
+              "sidebar_color": body.color,
               "sections": [
                 {
                   "type": "attachments",
