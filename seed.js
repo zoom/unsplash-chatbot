@@ -9,7 +9,7 @@ const pg = new Client({
 
 pg.connect();
 
-pg.query("CREATE TABLE access_token(access_token TEXT, expires_on NUMERIC) INSERT INTO access_token (access_token, expires_on) VALUES ('', '1')").then((res) => {
+pg.query(`CREATE TABLE access_token(access_token TEXT, expires_on NUMERIC)`).then((res) => {
   console.log(res);
   pg.end();
 }).catch((err) => {
