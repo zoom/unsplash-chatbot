@@ -35,6 +35,6 @@
     }
   },
   "scripts": {
-    "postdeploy": "chmod +x ./seed.js"
+    "postdeploy": "node ./seed.js"
   }
 }
