@@ -132,7 +132,7 @@ app.post('/unsplash', (req, res) => {
     }, (error, httpResponse, body) => {
       if (error) {
         console.log(error)
-        res.send('Error refreshing token from Zoom.')
+        res.send('Error refreshing access_token from Zoom.')
       } else {
         body = JSON.parse(body)
 
