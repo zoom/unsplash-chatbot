@@ -21,6 +21,18 @@ app.get('/authorize', (req, res) => {
   res.send('Thanks for installing the Unsplash Bot for Zoom Chat!')
 })
 
+app.get('/support', (req, res) => {
+  res.send('Contact tommy.gaessler@zoom.us for support.')
+})
+
+app.get('/privacy', (req, res) => {
+  res.send('We do not store any of your user data.')
+})
+
+app.get('/zoomverify/verifyzoom.html', (req, res) => {
+  res.send(process.env.zoom_verification_code)
+})
+
 app.post('/unsplash', (req, res) => {
   pg.query('SELECT * FROM access_token', (error, results) => {
     if (error) {
@@ -135,18 +147,6 @@ app.post('/unsplash', (req, res) => {
       }
     })
   }
-})
-
-app.get('/support', (req, res) => {
-  res.send('Contact tommy.gaessler@zoom.us for support.')
-})
-
-app.get('/privacy', (req, res) => {
-  res.send('We do not store any of your user data.')
-})
-
-app.get('/zoomverify/verifyzoom.html', (req, res) => {
-  res.send(process.env.zoom_verification_code)
 })
 
 app.post('/deauthorize', (req, res) => {
