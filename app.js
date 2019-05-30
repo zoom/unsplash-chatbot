@@ -14,11 +14,11 @@ const port = process.env.PORT || 4000
 app.use(bodyParser.json())
 
 app.get('/', (req, res) => {
-  res.send('Welcome to the Unsplash Bot for Zoom Chat!')
+  res.send('Welcome to the Unsplash Chatbot for Zoom!')
 })
 
 app.get('/authorize', (req, res) => {
-  res.send('Thanks for installing the Unsplash Bot for Zoom Chat!')
+  res.send('Thanks for installing the Unsplash Chatbot for Zoom!')
 })
 
 app.get('/support', (req, res) => {
@@ -26,7 +26,7 @@ app.get('/support', (req, res) => {
 })
 
 app.get('/privacy', (req, res) => {
-  res.send('We do not store any of your user data.')
+  res.send('The Unsplash Chatbot for Zoom does not store any user data.')
 })
 
 app.get('/zoomverify/verifyzoom.html', (req, res) => {
@@ -37,7 +37,7 @@ app.post('/unsplash', (req, res) => {
   pg.query('SELECT * FROM access_token', (error, results) => {
     if (error) {
       console.log(error)
-      res.send('Error in access_token query')
+      res.send('Error getting access_token from database.')
     } else {
       if (results.rows[0].expires_on > (new Date().getTime() / 1000)) {
         getPhoto(results.rows[0].access_token)
@@ -51,7 +51,7 @@ app.post('/unsplash', (req, res) => {
     request(`https://api.unsplash.com/photos/random?query=${req.body.payload.cmd}&orientation=landscape&client_id=${process.env.unsplash_client_id}`, (error, body) => {
       if (error) {
         console.log(error)
-        res.send('Error in getting photo')
+        res.send('Error getting photo from Unsplash.')
       } else {
         body = JSON.parse(body.body)
         if (body.errors) {
@@ -117,10 +117,10 @@ app.post('/unsplash', (req, res) => {
     }, (error, httpResponse, body) => {
       console.log(body)
       if (error) {
-        res.send('Error sending chat')
         console.log(error)
+        res.send('Error sending chat.')
       } else {
-        res.send('Chat sent successfully')
+        res.send('Successfully sent chat.')
       }
     })
   }
@@ -132,14 +132,14 @@ app.post('/unsplash', (req, res) => {
     }, (error, httpResponse, body) => {
       if (error) {
         console.log(error)
-        res.send('Error refreshing token')
+        res.send('Error refreshing token from Zoom.')
       } else {
         body = JSON.parse(body)
 
         pg.query(`UPDATE access_token SET access_token = '${body.access_token}', expires_on = ${(new Date().getTime() / 1000) + body.expires_in}`, (error, results) => {
           if (error) {
             console.log(error)
-            res.send('Error setting access_token')
+            res.send('Error setting access_token in database.')
           } else {
             getPhoto(body.access_token)
           }
@@ -150,7 +150,7 @@ app.post('/unsplash', (req, res) => {
 })
 
 app.post('/deauthorize', (req, res) => {
-  res.send('deauthorized')
+  res.send('The Unsplash Chatbot for Zoom has been removed from your account.')
 })
 
 app.listen(port, () => console.log(`Chatbot listening on port ${port}!`))
