@@ -9,7 +9,7 @@
   ],
   "env": {
     "unsplash_client_id": {
-      "description": "Your Unsplash Access Key, it's the same for production and development, found your Unsplash App Page",
+      "description": "Your Unsplash Access Key, it's the same for production and development, found on your Unsplash App Page",
       "value": "",
       "required": true
     },
@@ -29,7 +29,7 @@
       "required": true
     },
     "zoom_verification_code": {
-      "description": "Your Zoom domain verification code (Optional, used to verify your domain name, found on your Zoom Submit page)",
+      "description": "Optional, Your Zoom domain verification code, used to verify your domain name, found on your Zoom Submit page",
       "value": "",
       "required": false
     }
