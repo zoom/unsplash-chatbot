@@ -9,27 +9,27 @@
   ],
   "env": {
     "unsplash_client_id": {
-      "description": "Your Unsplash client_id",
+      "description": "Your Unsplash Access Key, it's the same for production and development, found your Unsplash App Page",
       "value": "",
       "required": true
     },
     "zoom_client_id": {
-      "description": "Your Zoom client_id",
+      "description": "Your Zoom Production Client ID, found on your Zoom App Credentials page",
       "value": "",
       "required": true
     },
     "zoom_client_secret": {
-      "description": "Your Zoom client_secret",
+      "description": "Your Zoom Production Client Secret, found on your Zoom App Credentials page",
       "value": "",
       "required": true
     },
     "zoom_robot_jid": {
-      "description": "Your Zoom robot_jid",
+      "description": "Your Zoom Production Bot JID, found on your Zoom Features page",
       "value": "",
       "required": true
     },
     "zoom_verification_code": {
-      "description": "Your Zoom domain verification code (optional)",
+      "description": "Your Zoom domain verification code (Optional, used to verify your domain name, found on your Zoom Submit page)",
       "value": "",
       "required": false
     }
