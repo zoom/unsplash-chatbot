@@ -1,23 +1,27 @@
 {
   "name": "unsplash-chat-bot",
   "version": "1.0.0",
-  "description": "Unsplash Integration for Zoom Chat",
+  "description": "[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
-  },
-  "author": "tommygaessler",
-  "license": "ISC",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/tommygaessler/unsplash-chat-bot.git"
-  },
   "dependencies": {
     "body-parser": "^1.19.0",
     "dotenv": "^8.0.0",
     "express": "^4.17.0",
     "pg": "^7.11.0",
     "request": "^2.88.0"
-  }
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tommygaessler/unsplash-chat-bot.git"
+  },
+  "author": "Tommy Gaessler",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tommygaessler/unsplash-chat-bot/issues"
+  },
+  "homepage": "https://github.com/tommygaessler/unsplash-chat-bot#readme"
 }

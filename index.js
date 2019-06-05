@@ -6,7 +6,9 @@ const request = require('request')
 const { Client } = require('pg')
 const pg = new Client(process.env.DATABASE_URL)
 
-pg.connect()
+pg.connect().catch((error) => {
+  console.log(error)
+})
 
 const app = express()
 const port = process.env.PORT || 4000
@@ -75,7 +77,6 @@ app.post('/unsplash', (req, res) => {
                   'type': 'attachments',
                   'img_url': body.urls.regular,
                   'resource_url': body.links.html,
-                  // 'ext': 'png',
                   'information': {
                     'title': {
                       'text': 'Photo by ' + body.user.name
