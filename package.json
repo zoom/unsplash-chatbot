@@ -1,5 +1,5 @@
 {
-  "name": "unsplash-chat-bot",
+  "name": "unsplash-chatbot",
   "version": "1.0.0",
   "description": "[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)",
   "main": "index.js",
@@ -16,12 +16,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tommygaessler/unsplash-chat-bot.git"
+    "url": "git+https://github.com/tommygaessler/unsplash-chatbot.git"
   },
   "author": "Tommy Gaessler",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/tommygaessler/unsplash-chat-bot/issues"
+    "url": "https://github.com/tommygaessler/unsplash-chatbot/issues"
   },
-  "homepage": "https://github.com/tommygaessler/unsplash-chat-bot#readme"
+  "homepage": "https://github.com/tommygaessler/unsplash-chatbot#readme"
 }
