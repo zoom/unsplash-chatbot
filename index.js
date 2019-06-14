@@ -76,7 +76,7 @@ app.post('/unsplash', (req, res) => {
                 {
                   'type': 'attachments',
                   'img_url': body.urls.regular,
-                  'resource_url': body.links.html,
+                  'resource_url': body.user.links.html,
                   'information': {
                     'title': {
                       'text': 'Photo by ' + body.user.name
