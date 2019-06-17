@@ -106,7 +106,10 @@ app.post('/unsplash', (req, res) => {
         'account_id': req.body.payload.accountId,
         'content': {
           'head': {
-            'text': '/unsplash ' + req.body.payload.cmd
+            'text': '/unsplash ' + req.body.payload.cmd,
+            'sub_head': {
+              'text': 'Sent by ' + req.body.payload.userName
+            }
           },
           'body': chatBody
         }
