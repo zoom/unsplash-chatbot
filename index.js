@@ -171,7 +171,6 @@ app.post('/deauthorize', (req, res) => {
       'cache-control': 'no-cache'
     }
   }, (error, httpResponse, body) => {
-    console.log(body)
     if (error) {
       console.log(error)
       res.send('Error deauthorizing app from Zoom.')
