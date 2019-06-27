@@ -23,7 +23,7 @@
       "value": "",
       "required": true
     },
-    "zoom_robot_jid": {
+    "zoom_bot_jid": {
       "description": "Your Zoom Production Bot JID, found on your Zoom Features page",
       "value": "",
       "required": true

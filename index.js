@@ -36,20 +36,20 @@ app.get('/zoomverify/verifyzoom.html', (req, res) => {
 })
 
 app.post('/unsplash', (req, res) => {
-  pg.query('SELECT * FROM access_token', (error, results) => {
+  pg.query('SELECT * FROM chatbot_token', (error, results) => {
     if (error) {
       console.log(error)
-      res.send('Error getting access_token from database.')
+      res.send('Error getting chatbot_token from database.')
     } else {
       if (results.rows[0].expires_on > (new Date().getTime() / 1000)) {
-        getPhoto(results.rows[0].access_token)
+        getPhoto(results.rows[0].token)
       } else {
-        refreshToken()
+        getChatbotToken()
       }
     }
   })
 
-  function getPhoto (zoomAccessToken) {
+  function getPhoto (chatbotToken) {
     request(`https://api.unsplash.com/photos/random?query=${req.body.payload.cmd}&orientation=landscape&client_id=${process.env.unsplash_client_id}`, (error, body) => {
       if (error) {
         console.log(error)
@@ -66,7 +66,7 @@ app.post('/unsplash', (req, res) => {
               })
             }
           ]
-          sendChat(errors, zoomAccessToken)
+          sendChat(errors, chatbotToken)
         } else {
           var photo = [
             {
@@ -89,19 +89,19 @@ app.post('/unsplash', (req, res) => {
               ]
             }
           ]
-          sendChat(photo, zoomAccessToken)
+          sendChat(photo, chatbotToken)
         }
       }
     })
   }
 
-  function sendChat (chatBody, zoomAccessToken) {
+  function sendChat (chatBody, chatbotToken) {
     request({
       url: 'https://api.zoom.us/v2/im/chat/messages',
       method: 'POST',
       json: true,
       body: {
-        'robot_jid': process.env.zoom_robot_jid,
+        'robot_jid': process.env.zoom_bot_jid,
         'to_jid': req.body.payload.toJid,
         'account_id': req.body.payload.accountId,
         'content': {
@@ -116,7 +116,7 @@ app.post('/unsplash', (req, res) => {
       },
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + zoomAccessToken
+        'Authorization': 'Bearer ' + chatbotToken
       }
     }, (error, httpResponse, body) => {
       console.log(body)
@@ -129,21 +129,21 @@ app.post('/unsplash', (req, res) => {
     })
   }
 
-  function refreshToken () {
+  function getChatbotToken () {
     request({
       url: `https://api.zoom.us/oauth/token?grant_type=client_credentials&client_id=${process.env.zoom_client_id}&client_secret=${process.env.zoom_client_secret}`,
       method: 'POST'
     }, (error, httpResponse, body) => {
       if (error) {
         console.log(error)
-        res.send('Error refreshing access_token from Zoom.')
+        res.send('Error getting chatbot_token from Zoom.')
       } else {
         body = JSON.parse(body)
 
-        pg.query(`UPDATE access_token SET access_token = '${body.access_token}', expires_on = ${(new Date().getTime() / 1000) + body.expires_in}`, (error, results) => {
+        pg.query(`UPDATE chatbot_token SET token = '${body.access_token}', expires_on = ${(new Date().getTime() / 1000) + body.expires_in}`, (error, results) => {
           if (error) {
             console.log(error)
-            res.send('Error setting access_token in database.')
+            res.send('Error setting chatbot_token in database.')
           } else {
             getPhoto(body.access_token)
           }
