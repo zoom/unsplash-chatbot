@@ -1,11 +1,5 @@
 # Unsplash Chatbot for Zoom
 
-See the best photos on the internet right in Zoom Chat!
+This is a sample Chatbot app that sends Unsplash photos to Zoom chat.
 
-Just type "/unsplash mountains" to see an amazing photo of mountains!
-
-Click the photo to see the enlarged version on Unsplash, where you can download it, like it, or see related photos!
-
-To install, click the "Deploy to Heroku" Button!
-
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+[Click here to follow the tutorial on our docs.](https://tommys-playground.docs.stoplight.io/developer/documentation/chatbots/build-a-chatbot)
