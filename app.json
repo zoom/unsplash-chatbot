@@ -8,7 +8,7 @@
     "heroku-postgresql"
   ],
   "env": {
-    "unsplash_client_id": {
+    "unsplash_access_key": {
       "description": "Your Unsplash Access Key, it's the same for production and development, found on your Unsplash App Page",
       "value": "",
       "required": true

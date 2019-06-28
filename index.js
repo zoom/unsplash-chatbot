@@ -50,7 +50,7 @@ app.post('/unsplash', (req, res) => {
   })
 
   function getPhoto (chatbotToken) {
-    request(`https://api.unsplash.com/photos/random?query=${req.body.payload.cmd}&orientation=landscape&client_id=${process.env.unsplash_client_id}`, (error, body) => {
+    request(`https://api.unsplash.com/photos/random?query=${req.body.payload.cmd}&orientation=landscape&client_id=${process.env.unsplash_access_key}`, (error, body) => {
       if (error) {
         console.log(error)
         res.send('Error getting photo from Unsplash.')
