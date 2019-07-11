@@ -36,18 +36,22 @@ app.get('/zoomverify/verifyzoom.html', (req, res) => {
 })
 
 app.post('/unsplash', (req, res) => {
-  pg.query('SELECT * FROM chatbot_token', (error, results) => {
-    if (error) {
-      console.log(error)
-      res.send('Error getting chatbot_token from database.')
-    } else {
-      if (results.rows[0].expires_on > (new Date().getTime() / 1000)) {
-        getPhoto(results.rows[0].token)
+  if (req.headers.authorization === process.env.zoom_verification_token) {
+    pg.query('SELECT * FROM chatbot_token', (error, results) => {
+      if (error) {
+        console.log(error)
+        res.send('Error getting chatbot_token from database.')
       } else {
-        getChatbotToken()
+        if (results.rows[0].expires_on > (new Date().getTime() / 1000)) {
+          getPhoto(results.rows[0].token)
+        } else {
+          getChatbotToken()
+        }
       }
-    }
-  })
+    })
+  } else {
+    res.send('Unauthorized request to Unsplash Chatbot for Zoom.')
+  }
 
   function getPhoto (chatbotToken) {
     request(`https://api.unsplash.com/photos/random?query=${req.body.payload.cmd}&orientation=landscape&client_id=${process.env.unsplash_access_key}`, (error, body) => {
@@ -154,30 +158,34 @@ app.post('/unsplash', (req, res) => {
 })
 
 app.post('/deauthorize', (req, res) => {
-  request({
-    url: 'https://api.zoom.us/oauth/data/compliance',
-    method: 'POST',
-    json: true,
-    body: {
-      'client_id': req.body.payload.client_id,
-      'user_id': req.body.payload.user_id,
-      'account_id': req.body.payload.account_id,
-      'deauthorization_event_received': req.body.payload,
-      'compliance_completed': true
-    },
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Basic ' + Buffer.from(process.env.zoom_client_id + ':' + process.env.zoom_client_secret).toString('base64'),
-      'cache-control': 'no-cache'
-    }
-  }, (error, httpResponse, body) => {
-    if (error) {
-      console.log(error)
-      res.send('Error deauthorizing app from Zoom.')
-    } else {
-      res.send('Successfully deauthorized the Unsplash Chatbot for Zoom.')
-    }
-  })
+  if (req.headers.authorization === process.env.zoom_verification_token) {
+    request({
+      url: 'https://api.zoom.us/oauth/data/compliance',
+      method: 'POST',
+      json: true,
+      body: {
+        'client_id': req.body.payload.client_id,
+        'user_id': req.body.payload.user_id,
+        'account_id': req.body.payload.account_id,
+        'deauthorization_event_received': req.body.payload,
+        'compliance_completed': true
+      },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Basic ' + Buffer.from(process.env.zoom_client_id + ':' + process.env.zoom_client_secret).toString('base64'),
+        'cache-control': 'no-cache'
+      }
+    }, (error, httpResponse, body) => {
+      if (error) {
+        console.log(error)
+        res.send('Error deauthorizing app from Zoom.')
+      } else {
+        res.send('Successfully deauthorized the Unsplash Chatbot for Zoom.')
+      }
+    })
+  } else {
+    res.send('Unauthorized request to Unsplash Chatbot for Zoom.')
+  }
 })
 
 app.listen(port, () => console.log(`Chatbot listening on port ${port}!`))

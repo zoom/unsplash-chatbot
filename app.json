@@ -28,6 +28,11 @@
       "value": "",
       "required": true
     },
+    "zoom_verification_token": {
+      "description": "Your Zoom Verification Token, found on your Zoom Features page",
+      "value": "",
+      "required": true
+    },
     "zoom_verification_code": {
       "description": "Optional, Your Zoom domain verification code, used to verify your domain name, found on your Zoom Submit page",
       "value": "",
