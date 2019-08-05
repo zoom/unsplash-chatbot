@@ -135,8 +135,11 @@ app.post('/unsplash', (req, res) => {
 
   function getChatbotToken () {
     request({
-      url: `https://api.zoom.us/oauth/token?grant_type=client_credentials&client_id=${process.env.zoom_client_id}&client_secret=${process.env.zoom_client_secret}`,
-      method: 'POST'
+      url: `https://api.zoom.us/oauth/token?grant_type=client_credentials`,
+      method: 'POST',
+      headers: {
+        'Authorization': 'Basic ' + Buffer.from(process.env.zoom_client_id + ':' + process.env.zoom_client_secret).toString('base64')
+      }
     }, (error, httpResponse, body) => {
       if (error) {
         console.log(error)
