@@ -16,12 +16,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tommygaessler/unsplash-chatbot.git"
+    "url": "git+https://github.com/zoom/unsplash-chatbot.git"
   },
   "author": "Tommy Gaessler",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/tommygaessler/unsplash-chatbot/issues"
+    "url": "https://github.com/zoom/unsplash-chatbot/issues"
   },
-  "homepage": "https://github.com/tommygaessler/unsplash-chatbot#readme"
+  "homepage": "https://github.com/zoom/unsplash-chatbot#readme"
 }
