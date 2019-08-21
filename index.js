@@ -123,7 +123,6 @@ app.post('/unsplash', (req, res) => {
         'Authorization': 'Bearer ' + chatbotToken
       }
     }, (error, httpResponse, body) => {
-      console.log(body)
       if (error) {
         console.log('Error sending chat.', error)
       } else {
