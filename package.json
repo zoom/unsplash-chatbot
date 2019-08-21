@@ -1,7 +1,7 @@
 {
   "name": "unsplash-chatbot",
   "version": "1.0.0",
-  "description": "[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)",
+  "description": "Send Unsplash Photos in Zoom Chat",
   "main": "index.js",
   "dependencies": {
     "body-parser": "^1.19.0",
