@@ -2,9 +2,13 @@
 
 This is a sample Chatbot app using Node.js, PostgreSQL, and the Unsplash API, deployed to Heroku.
 
+![Unsplash Chatbot for Zoom](https://s3.amazonaws.com/user-content.stoplight.io/19808/1562179851787)
+
 [To create this Chatbot from scratch, click here to follow the step by step tutorial on our docs.](https://marketplace.zoom.us/docs/guides/chatbots/build-a-chatbot)
 
 To run the completed Chatbot code locally or deploy it to a live server, continue reading below.
+
+
 
 ## Local/Development Setup
 
