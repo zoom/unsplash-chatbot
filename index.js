@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/authorize', (req, res) => {
-  res.send('Thanks for installing the Unsplash Chatbot for Zoom!')
+  res.redirect('https://zoom.us/launch/chat?jid=robot_' + process.env.zoom_bot_jid)
 })
 
 app.get('/support', (req, res) => {
@@ -29,6 +29,14 @@ app.get('/support', (req, res) => {
 
 app.get('/privacy', (req, res) => {
   res.send('The Unsplash Chatbot for Zoom does not store any user data.')
+})
+
+app.get('/terms', (req, res) => {
+  res.send('By installing the Unsplash Chatbot for Zoom, you are accept and agree to these terms...')
+})
+
+app.get('/documentation', (req, res) => {
+  res.send('Try typing "island" to see a photo of an island, or anything else you have in mind!')
 })
 
 app.get('/zoomverify/verifyzoom.html', (req, res) => {
@@ -51,6 +59,7 @@ app.post('/unsplash', (req, res) => {
       }
     })
   } else {
+    res.status(401)
     res.send('Unauthorized request to Unsplash Chatbot for Zoom.')
   }
 
@@ -58,6 +67,17 @@ app.post('/unsplash', (req, res) => {
     request(`https://api.unsplash.com/photos/random?query=${req.body.payload.cmd}&orientation=landscape&client_id=${process.env.unsplash_access_key}`, (error, body) => {
       if (error) {
         console.log('Error getting photo from Unsplash.', error)
+        var errors = [
+          {
+            'type': 'section',
+            'sidebar_color': '#D72638',
+            'sections': [{
+              'type': 'message',
+              'text': 'Error getting photo from Unsplash.'
+            }]
+          }
+        ]
+        sendChat(errors, chatbotToken)
       } else {
         body = JSON.parse(body.body)
         if (body.errors) {
@@ -184,6 +204,7 @@ app.post('/deauthorize', (req, res) => {
       }
     })
   } else {
+    res.status(401)
     res.send('Unauthorized request to Unsplash Chatbot for Zoom.')
   }
 })
