@@ -120,18 +120,6 @@ To run the completed Chatbot on a live server, follow these steps,
 
    `/unsplash mountains`
 
-## Need Support?
-The first place to look for help is on our [Developer Forum](https://devforum.zoom.us/), where Zoom Marketplace Developers can ask questions for public answers.
+## Need help?
 
-If you can’t find the answer in the Developer Forum or your request requires sensitive information to be relayed, please email us at developersupport@zoom.us.
-
-
-
-<!-- ![See the best photos on the internet right in Zoom Chat](https://s3.amazonaws.com/user-content.stoplight.io/19808/1562179347007)
-
-![Works in Channels and Direct Messages](https://s3.amazonaws.com/user-content.stoplight.io/19808/1562179353089)
-
-![Collaborate Right in Zoom Chat](https://s3.amazonaws.com/user-content.stoplight.io/19808/1562179359856)
-
-
-![Click the photo to see the photo & photographer on Unsplash](https://s3.amazonaws.com/user-content.stoplight.io/19808/1562179364706) -->
+If you're looking for help, try [Developer Support](https://devsupport.zoom.us) or our [Developer Forum](https://devforum.zoom.us). Priority support is also available with [Premier Developer Support](https://zoom.us/docs/en-us/developer-support-plans.html) plans.
