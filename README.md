@@ -6,7 +6,7 @@ This is a sample Chatbot app using Node.js, PostgreSQL, and the Unsplash API, de
 
 ![Unsplash Chatbot for Zoom](https://marketplace.zoom.us/docs/images/migrated/1562179851787)
 
-<img src="https://marketplace.zoom.us/docs/images/migrated/1562179851787" />
+<img src="https://marketplace.zoom.us/docs/images/migrated/1562179851787.png" />
 
 [To create this Chatbot from scratch, click here to follow the step by step tutorial on our docs.](https://marketplace.zoom.us/docs/guides/chatbots/build-a-chatbot)
 
