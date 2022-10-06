@@ -182,7 +182,7 @@ app.post('/deauthorize', (req, res) => {
     res.status(200)
     res.send()
     request({
-      url: api_'/oauth/data/compliance',
+      url: api_url + '/oauth/data/compliance',
       method: 'POST',
       json: true,
       body: {
