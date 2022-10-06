@@ -12,6 +12,7 @@ pg.connect().catch((error) => {
 
 const app = express()
 const port = process.env.PORT || 4000
+const api_url = process.env.api_url || 'https://api.zoomgov.com'
 
 app.use(bodyParser.json())
 
@@ -121,7 +122,7 @@ app.post('/unsplash', (req, res) => {
 
   function sendChat (chatBody, chatbotToken) {
     request({
-      url: 'https://api.zoom.us/v2/im/chat/messages',
+      url: api_url + '/v2/im/chat/messages',
       method: 'POST',
       json: true,
       body: {
@@ -153,7 +154,7 @@ app.post('/unsplash', (req, res) => {
 
   function getChatbotToken () {
     request({
-      url: `https://api.zoom.us/oauth/token?grant_type=client_credentials`,
+      url: api_url + `/oauth/token?grant_type=client_credentials`,
       method: 'POST',
       headers: {
         'Authorization': 'Basic ' + Buffer.from(process.env.zoom_client_id + ':' + process.env.zoom_client_secret).toString('base64')
@@ -181,7 +182,7 @@ app.post('/deauthorize', (req, res) => {
     res.status(200)
     res.send()
     request({
-      url: 'https://api.zoom.us/oauth/data/compliance',
+      url: api_'/oauth/data/compliance',
       method: 'POST',
       json: true,
       body: {
