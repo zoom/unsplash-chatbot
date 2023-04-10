@@ -1,6 +1,6 @@
 {
   "name": "Unsplash Chatbot",
-  "description": "Send Unsplash Photos in Zoom Chat",
+  "description": "Send Unsplash photos in Zoom Team Chat.",
   "repository": "https://github.com/zoom/unsplash-chatbot",
   "logo": "https://unsplash.com/assets/core/logo-black-df2168ed0c378fa5506b1816e75eb379d06cfcd0af01e07a2eb813ae9b5d7405.svg",
   "keywords": ["zoom", "chatbot", "unsplash", "node.js", "express"],
@@ -8,35 +8,45 @@
     "heroku-postgresql"
   ],
   "env": {
-    "unsplash_access_key": {
+    "UNSPLASH_ACCESS_KEY": {
       "description": "Your Unsplash Access Key, it's the same for production and development, found on your Unsplash App Page",
       "value": "",
       "required": true
     },
-    "zoom_client_id": {
-      "description": "Your Zoom Production Client ID, found on your Zoom App Credentials page",
+    "ZOOM_CLIENT_ID": {
+      "description": "Your Zoom Production Client ID, found on your App's Credentials page",
       "value": "",
       "required": true
     },
-    "zoom_client_secret": {
-      "description": "Your Zoom Production Client Secret, found on your Zoom App Credentials page",
+    "ZOOM_CLIENT_SECRET": {
+      "description": "Your Zoom Production Client Secret, found on your App's Credentials page",
       "value": "",
       "required": true
     },
-    "zoom_bot_jid": {
-      "description": "Your Zoom Production Bot JID, found on your Zoom Features page",
+    "ZOOM_BOT_JID": {
+      "description": "Your Zoom Production Bot JID, found on your App's Features page",
       "value": "",
       "required": true
     },
-    "zoom_verification_token": {
-      "description": "Your Zoom Verification Token, found on your Zoom Features page",
+    "ZOOM_WEBHOOK_SECRET_TOKEN": {
+      "description": "Your Zoom Webhook Secret Token, found on your App's Features page",
       "value": "",
       "required": true
     },
-    "zoom_verification_code": {
-      "description": "Optional, Your Zoom domain verification code, used to verify your domain name, found on your Zoom Submit page",
+    "ZOOM_VERIFICATION_CODE": {
+      "description": "Your Zoom domain verification code, used to verify your domain name, found on your App's Submit page",
       "value": "",
       "required": false
+    },
+    "DATABASE_ENCRYPTION_KEY": {
+      "description": "An encryption key used to encrypt the data in your database. Treat this key secret, like a password",
+      "value": "",
+      "required": true
+    },
+    "DATABASE_ENCRYPTION_ALGO": {
+      "description": "An encryption algorithm used to encrypt your the data in your database",
+      "value": "aes256",
+      "required": true
     }
   },
   "scripts": {

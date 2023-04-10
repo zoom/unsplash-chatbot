@@ -1,7 +1,7 @@
 {
   "name": "unsplash-chatbot",
-  "version": "1.1.0",
-  "description": "Send Unsplash Photos in Zoom Chat",
+  "version": "2.0.0",
+  "description": "Send Unsplash photos in Zoom Team Chat.",
   "author": "Zoom Video Communications, Inc.",
   "contributors": [
     {
@@ -10,11 +10,11 @@
   ],
   "main": "index.js",
   "dependencies": {
+    "axios": "^1.3.4",
     "body-parser": "^1.19.0",
     "dotenv": "^8.0.0",
     "express": "^4.17.0",
-    "pg": "^8.6.0",
-    "request": "^2.88.0"
+    "pg": "^8.6.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

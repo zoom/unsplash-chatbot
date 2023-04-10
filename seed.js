@@ -5,7 +5,7 @@ const pg = new Client(process.env.DATABASE_URL)
 
 pg.connect()
 
-pg.query(`CREATE TABLE chatbot_token(token TEXT, expires_on NUMERIC); INSERT INTO chatbot_token (token, expires_on) VALUES ('', '1');`, (error, results) => {
+pg.query(`CREATE EXTENSION IF NOT EXISTS pgcrypto; CREATE TABLE IF NOT EXISTS users(account_id TEXT PRIMARY KEY, access_token TEXT, expires_on TEXT);`, (error, results) => {
   if (error) {
     console.log(error)
   } else {

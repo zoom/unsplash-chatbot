@@ -1,42 +1,46 @@
-# Unsplash Chatbot for Zoom
+# Unsplash for Zoom Team Chat sample
 
-Use of this sample app is subject to our [Terms of Use](https://zoom.us/docs/en-us/zoom_api_license_and_tou.html).
+Use of this sample app is subject to our [Terms of Use](https://explore.zoom.us/en/legal/zoom-api-license-and-tou/).
 
-This is a sample Chatbot app using Node.js, PostgreSQL, and the Unsplash API, deployed to Heroku.
+This is a sample app that sends [Unsplash](https://unsplash.com/) photos to [Zoom Team Chat](https://explore.zoom.us/en/products/group-chat/).
 
-![Unsplash Chatbot for Zoom](https://camo.githubusercontent.com/dfc5a89c00049b0468901c781f67fe868aad43871a1e3b239ff6b2493f985e46/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f757365722d636f6e74656e742e73746f706c696768742e696f2f31393830382f31353632313739383531373837)
+![Unsplash Team Chat App for Zoom](https://camo.githubusercontent.com/dfc5a89c00049b0468901c781f67fe868aad43871a1e3b239ff6b2493f985e46/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f757365722d636f6e74656e742e73746f706c696768742e696f2f31393830382f31353632313739383531373837)
 
-[To create this Chatbot from scratch, click here to follow the step by step tutorial on our docs.](https://marketplace.zoom.us/docs/guides/chatbots/build-a-chatbot)
+If you would like to skip these steps and just deploy the finished code to Heroku, click the Deploy to Heroku button. (You will still need to configure a few simple things, so skip to [Deployment](#deployment).)
 
-To run the completed Chatbot code locally or deploy it to a live server, continue reading below.
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/zoom/unsplash-chatbot)
 
+## Installation
 
+In terminal, run the following command to clone the repo:
 
-## Local/Development Setup
+`$ git clone https://github.com/zoom/unsplash-chatbot.git`
 
-To run the completed Chatbot locally, follow these steps,
+## Setup
 
-1. In terminal:
-
-   `$ git clone https://github.com/zoom/unsplash-chatbot.git`
+1. In terminal, cd into the cloned repo:
 
    `$ cd unsplash-chatbot`
 
+1. Then install the dependencies:
+
    `$ npm install`
+
+1. Create an environment file to store your credentials:
 
    `$ touch .env`
 
-   [Download PostgreSQL here](https://www.postgresql.org/download/) or if on a Mac install using [Homebrew](https://brew.sh/),
+1. Download [PostgreSQL here](https://www.postgresql.org/download/) or if on a Mac install using [Homebrew](https://brew.sh/),
 
    `$ brew install postgresql`
 
-   Once PostgreSQL is installed, follow these commands if you haven’t set it up before,
+1. Once PostgreSQL is installed, follow these commands if you haven’t set it up before,
 
    `$ brew services start postgresql`
 
    `$ psql postgres`
 
-   You should be inside the PostgreSQL terminal now and see a `postgres=#` preifx. Now let’s create a database user called "me" with a password of "password"
+1. You should be inside the PostgreSQL terminal now and see a postgres=# preifx. Now let’s create a database user called "me" with a password of "password"
 
    `postgres=# CREATE ROLE me WITH LOGIN PASSWORD 'password';`
 
@@ -44,82 +48,105 @@ To run the completed Chatbot locally, follow these steps,
 
    `postgres=# \q`
 
-   You have just added yourself as a user who has the create database permission. Now type this to connect to postgres as your user,
+1. You have just added yourself as a user who has the create database permission. Now type this to connect to postgres as your user,
 
    `$ psql -d postgres -U me`
 
-   Now that PostgreSQL is configured, let’s create a database, connect to it, and create a table to store our access_token. We will also seed our database with a blank access_token and an expires_on date of 1. That way, the first time we call our Zoom Chatbot it will think the access_token is expired. Then it will generate a new one for us, and save it. Run these postgres commands,
+1. Now that PostgreSQL is configured, let’s create a database,
 
-   `postgres=> CREATE DATABASE zoom_chatbot;`
+   `postgres=> CREATE DATABASE unsplash_for_zoom_team_chat;`
 
-   `postgres=> \c zoom_chatbot`
-
-   `zoom_chatbot=> CREATE TABLE chatbot_token (token TEXT,  expires_on NUMERIC);`
-
-   `zoom_chatbot=> INSERT INTO chatbot_token (token, expires_on)  VALUES ('', '1');`
-
-2. Add this code to your `.env` file, replacing the `Required` text with your respective [**Development** Zoom Chatbot API credentials](https://marketplace.zoom.us/docs/guides/getting-started/app-types/create-chatbot-app#register) and your [Unsplash Access Key](https://unsplash.com/oauth/applications).
-
-   If you followed my instructions on setting up PostgreSQL, don't change the `DATABASE_URL`. If you have setup PostgreSQL before or set it up differently than me reference this `postgres://DBUSERNAME:PASSWORD@SERVER:PORT/DATABASE`.
+1. Back in the `.env` file, add the following code and insert your [Zoom Team Chat App credentials](https://developers.zoom.us/docs/team-chat-apps/create/#generate-app-credentials), your [Unsplash Access Key](https://unsplash.com/oauth/applications), and a [database encryption key](https://www.allkeysgenerator.com/Random/Security-Encryption-Key-Generator.aspx):
 
    ```
-   unsplash_access_key=Required
-   zoom_client_id=Required
-   zoom_client_secret=Required
-   zoom_bot_jid=Required
-   zoom_verification_token=Required
-   DATABASE_URL=postgres://me:password@localhost:5432/zoom_chatbot
+   UNSPLASH_ACCESS_KEY=Required
+   ZOOM_CLIENT_ID=Required
+   ZOOM_CLIENT_SECRET=Required
+   ZOOM_BOT_JID=Required
+   ZOOM_WEBHOOK_SECRET_TOKEN=Required
+   ZOOM_VERIFICATION_CODE=Required
+   DATABASE_ENCRYPTION_KEY=Required
+   DATABASE_ENCRYPTION_ALGO=aes256
+   DATABASE_URL=postgres://me:password@localhost:5432/unsplash_for_zoom_team_chat
    ```
 
+   > If you followed my instructions on setting up PostgreSQL, don't change the DATABASE_URL. If you have setup PostgreSQL before or set it up differently than me, use this convention for the DATABASE_URL postgres://DBUSERNAME:PASSWORD@SERVER:PORT/DATABASE.
 
-3. In terminal:
+1. Save and close `.env`.
 
-   `$ npm run start` or `$ nodemon` ([for live reload / file change detection](https://www.npmjs.com/package/nodemon))
+1. Create the users table in your database and add the [pgcrypto encryption extension](https://www.postgresql.org/docs/current/pgcrypto.html) by running the seed file:
 
-   `$ ngrok http 4000` ([ngrok turns localhost into live server](https://ngrok.com/) so slash commands and user actions can be sent to your app)
+   `$ node seed.js`
 
-5. Open your ngrok https url in a browser, you should see this,
+1. Then start the server:
 
-   `Welcome to the Unsplash Chatbot for Zoom!`
+   `$ npm run start`
 
-6. On your App Marketplace Dashboard, add your ngrok https url to your Whitelist URLs (App Credentials Page), **Development** Redirect URL for OAuth (App Credentials Page), and **Development** Bot Endpoint URL (Features Page). Make sure to match the path after your ngrok https url with the express routes in index.js.
+1. We need to expose the local server to the internet to accept post requests, we will use [Ngrok](https://ngrok.com/) (free) for this.
 
-   > In order to click the **Save** button on the Features page when adding a Slash Command and Development Bot Endpoint URL, you have to provide a Production Bot Endpoint URL. Feel free to use https://zoom.us as a placeholder.
+   Once installed, open a new terminal tab and run:
 
-   After that, your app is ready to be installed!
+   `$ ngrok http 4000`
 
-7. On your App Marketplace Dashboard, go to the **Local Test** page and click **Install**. After you click the **Authorize** button, you should be taken to your redirect url and see this,
+   > NOTE: [I've put ngrok in my PATH so I can call it globally.](https://stackoverflow.com/a/36759493/6592510)
 
-   `Thanks for installing the Unsplash Chatbot for Zoom!`
+1. Copy the ngrok https url and paste it in the Bot endpoint URL input on your Zoom App's Features section. Remember to include `/unsplash` path.
 
+   Example: `https://abc123.ngrok.io/unsplash`
 
-8. Now that your Chatbot is installed on your Zoom account, go to a Zoom Chat channel and type,
+1. Click "Save".
+
+## Usage
+
+1. On your Zoom Team Chat App's Credentials section, go to the Local Test or Submit page depending on which envoirnment you are using (Development or Production), and click "Add". After authorizing, you should be taken to Zoom Team Chat and see a message from the Unsplash Team Chat App
+
+   > Thanks for installing Unsplash for Zoom Team Chat!
+
+1. Now that your Team Chat App is installed on your Zoom account, send a message using your slash command:
 
    `/unsplash mountains`
 
+## Deployment
 
-## Production Setup
+### Heroku (button)
 
-To run the completed Chatbot on a live server, follow these steps,
+1. After clicking the "Deploy to Heroku" button, enter a name for your app (or leave it blank to have a name generated for you), and insert your [Zoom Team Chat App credentials](https://developers.zoom.us/docs/team-chat-apps/create/#generate-app-credentials), your [Unsplash Access Key](https://unsplash.com/oauth/applications), and a [database encryption key](https://www.allkeysgenerator.com/Random/Security-Encryption-Key-Generator.aspx):
 
-1. Click the **Deploy to Heroku** Button,
+   - `UNSPLASH_ACCESS_KEY` (Your Unsplash Access Key, it's the same for production and development, found on your Unsplash App Page)
+   - `ZOOM_CLIENT_ID` (Your Zoom Production Client ID, found on your App's Credentials page)
+   - `ZOOM_CLIENT_SECRET` (Your Zoom Production Client Secret, found on your App's Credentials page)
+   - `ZOOM_BOT_JID` (Your Zoom Production Bot JID, found on your App's Features page)
+   - `ZOOM_WEBHOOK_SECRET_TOKEN` (Your Zoom Webhook Secret Token, found on your App's Features page)
+   - `ZOOM_VERIFICATION_CODE` (Your Zoom domain verification code, used to verify your domain name, found on your App's Submit page)
+   - `DATABASE_ENCRYPTION_KEY` (An encryption key used to encrypt the data in your database. Treat this key secret, like a password)
+   - `DATABASE_ENCRYPTION_ALGO` (An encryption algorithm used to encrypt your the data in your database)
 
-   [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+   > The database will automatically be created, and the DATABASE_URL environment variable will automatically be set in Heroku.
 
-2. Fill in your [**Production** Zoom Chatbot API credentials](https://marketplace.zoom.us/docs/guides/getting-started/app-types/create-chatbot-app#register) and your [Unsplash Access Key](https://unsplash.com/oauth/applications) in the **Config Vars** section.
+1. Then click "Deploy App".
 
-3. Click **Deploy app**.
+1. Copy the Heroku url and paste it in the Bot endpoint URL input on your Zoom App's Features section. Remember to include `/unsplash` path.
 
-4. On your App Marketplace Dashboard, add your Heroku url to your Whitelist URLs (App Credentials Page), **Production** Redirect URL for OAuth (App Credentials Page), and **Production** Bot Endpoint URL (Features Page). Make sure to match the path after your Heroku url with the express routes in index.js.
+   Example: `https://abc123.herokuapp.com/unsplash`
 
-5. On your App Marketplace Dashboard, go to the **Submit** page and click **Add to Zoom**. After you click the **Authorize** button, you should be taken to your redirect url and see this,
+### Heroku (CLI)
 
-   `Thanks for installing the Unsplash Chatbot for Zoom!`
+1. If you cloned this repo, you may use the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) to deploy your server. Remember to [provision Postgres](https://devcenter.heroku.com/articles/provisioning-heroku-postgres) and [set your config vars (envoirnment variables)](https://devcenter.heroku.com/articles/config-vars).
 
-6. Now that your Chatbot is installed on your Zoom account, go to a Zoom Chat channel and type,
+1. Copy the Heroku url and paste it in the Bot endpoint URL input on your Zoom App's Features section. Remember to include `/unsplash` path.
 
-   `/unsplash mountains`
+   Example: `https://abc123.herokuapp.com/unsplash`
+
+### Other Server Hosting
+
+1. For Other Server Hosting information, see [this tutorial](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/deployment#choosing_a_hosting_provider).
+
+1.  Copy the deployed url and paste it in the Bot endpoint URL input on your Zoom App's Features section. Remember to include `/unsplash` path.
+
+    Example: `https://abc123.compute-1.amazonaws.com/unsplash`
+
+Now you are ready to [use the Unsplash Team Chat App for Zoom](#usage).
 
 ## Need help?
 
-If you're looking for help, try [Developer Support](https://devsupport.zoom.us) or our [Developer Forum](https://devforum.zoom.us). Priority support is also available with [Premier Developer Support](https://zoom.us/docs/en-us/developer-support-plans.html) plans.
+If you're looking for help, try [Developer Support](https://devsupport.zoom.us) or our [Developer Forum](https://devforum.zoom.us). Priority support is also available with [Premier Developer Support](https://explore.zoom.us/docs/en-us/developer-support-plans.html) plans.
