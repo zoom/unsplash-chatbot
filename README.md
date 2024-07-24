@@ -2,9 +2,9 @@
 
 Use of this sample app is subject to our [Terms of Use](https://explore.zoom.us/en/legal/zoom-api-license-and-tou/).
 
-This is a sample app that sends [Unsplash](https://unsplash.com/) photos to [Zoom Team Chat](https://explore.zoom.us/en/products/group-chat/).
+This is a sample app that sends [Unsplash](https://unsplash.com/) photos to [Zoom Team Chat](https://www.zoom.com/en/products/team-chat/).
 
-![Unsplash Team Chat App for Zoom](https://camo.githubusercontent.com/dfc5a89c00049b0468901c781f67fe868aad43871a1e3b239ff6b2493f985e46/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f757365722d636f6e74656e742e73746f706c696768742e696f2f31393830382f31353632313739383531373837)
+![Unsplash Team Chat App for Zoom](https://miro.medium.com/v2/resize:fit:4800/format:webp/1*pT1T-m63ADVPo-VdZQYIqg.png)
 
 If you would like to skip these steps and just deploy the finished code to Heroku, click the Deploy to Heroku button. (You will still need to configure a few simple things, so skip to [Deployment](#deployment).)
 
@@ -56,7 +56,7 @@ In terminal, run the following command to clone the repo:
 
    `postgres=> CREATE DATABASE unsplash_for_zoom_team_chat;`
 
-1. Back in the `.env` file, add the following code and insert your [Zoom Team Chat App credentials](https://developers.zoom.us/docs/team-chat-apps/create/#generate-app-credentials), your [Unsplash Access Key](https://unsplash.com/oauth/applications), and a [database encryption key](https://www.allkeysgenerator.com/Random/Security-Encryption-Key-Generator.aspx):
+1. Back in the `.env` file, add the following code and insert your [Zoom Team Chat App credentials](https://developers.zoom.us/docs/team-chat-apps/create/#step-2-maintain-basic-information), your [Unsplash Access Key](https://unsplash.com/oauth/applications), and a [database encryption key](https://www.allkeysgenerator.com/Random/Security-Encryption-Key-Generator.aspx):
 
    ```
    UNSPLASH_ACCESS_KEY=Required
@@ -110,7 +110,7 @@ In terminal, run the following command to clone the repo:
 
 ### Heroku (button)
 
-1. After clicking the "Deploy to Heroku" button, enter a name for your app (or leave it blank to have a name generated for you), and insert your [Zoom Team Chat App credentials](https://developers.zoom.us/docs/team-chat-apps/create/#generate-app-credentials), your [Unsplash Access Key](https://unsplash.com/oauth/applications), and a [database encryption key](https://www.allkeysgenerator.com/Random/Security-Encryption-Key-Generator.aspx):
+1. After clicking the "Deploy to Heroku" button, enter a name for your app (or leave it blank to have a name generated for you), and insert your [Zoom Team Chat App credentials](https://developers.zoom.us/docs/team-chat-apps/create/#step-2-maintain-basic-information), your [Unsplash Access Key](https://unsplash.com/oauth/applications), and a [database encryption key](https://www.allkeysgenerator.com/Random/Security-Encryption-Key-Generator.aspx):
 
    - `UNSPLASH_ACCESS_KEY` (Your Unsplash Access Key, it's the same for production and development, found on your Unsplash App Page)
    - `ZOOM_CLIENT_ID` (Your Zoom Production Client ID, found on your App's Credentials page)
@@ -149,4 +149,4 @@ Now you are ready to [use the Unsplash Team Chat App for Zoom](#usage).
 
 ## Need help?
 
-If you're looking for help, try [Developer Support](https://devsupport.zoom.us) or our [Developer Forum](https://devforum.zoom.us). Priority support is also available with [Premier Developer Support](https://explore.zoom.us/docs/en-us/developer-support-plans.html) plans.
+If you're looking for help, try [Developer Support](https://developers.zoom.us/support/) or our [Developer Forum](https://devforum.zoom.us). Priority support is also available with [Premier Developer Support](https://explore.zoom.us/en/support-plans/developer/) plans.
