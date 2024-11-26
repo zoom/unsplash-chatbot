@@ -5,7 +5,10 @@ const axios = require('axios')
 const crypto = require('crypto')
 
 const { Client } = require('pg')
-const pg = new Client(process.env.DATABASE_URL)
+const pg = new Client({
+  connectionString:  process.env.DATABASE_URL,
+  ssl: process.env.NODE_ENV === 'production' ? true : false
+})
 
 pg.connect().catch((error) => {
   console.log('Error connecting to database', error)
