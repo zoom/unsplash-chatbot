@@ -33,11 +33,6 @@
       "value": "",
       "required": true
     },
-    "ZOOM_VERIFICATION_CODE": {
-      "description": "Your Zoom domain verification code, used to verify your domain name, found on your App's Submit page",
-      "value": "",
-      "required": false
-    },
     "DATABASE_ENCRYPTION_KEY": {
       "description": "An encryption key used to encrypt the data in your database. Treat this key secret, like a password",
       "value": "",

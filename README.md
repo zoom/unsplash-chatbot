@@ -64,7 +64,6 @@ In terminal, run the following command to clone the repo:
    ZOOM_CLIENT_SECRET=Required
    ZOOM_BOT_JID=Required
    ZOOM_WEBHOOK_SECRET_TOKEN=Required
-   ZOOM_VERIFICATION_CODE=Required
    DATABASE_ENCRYPTION_KEY=Required
    DATABASE_ENCRYPTION_ALGO=aes256
    DATABASE_URL=postgres://me:password@localhost:5432/unsplash_for_zoom_team_chat
@@ -117,7 +116,6 @@ In terminal, run the following command to clone the repo:
    - `ZOOM_CLIENT_SECRET` (Your Zoom Production Client Secret, found on your App's Credentials page)
    - `ZOOM_BOT_JID` (Your Zoom Production Bot JID, found on your App's Features page)
    - `ZOOM_WEBHOOK_SECRET_TOKEN` (Your Zoom Webhook Secret Token, found on your App's Features page)
-   - `ZOOM_VERIFICATION_CODE` (Your Zoom domain verification code, used to verify your domain name, found on your App's Submit page)
    - `DATABASE_ENCRYPTION_KEY` (An encryption key used to encrypt the data in your database. Treat this key secret, like a password)
    - `DATABASE_ENCRYPTION_ALGO` (An encryption algorithm used to encrypt your the data in your database)
 
@@ -132,6 +130,10 @@ In terminal, run the following command to clone the repo:
 ### Heroku (CLI)
 
 1. If you cloned this repo, you may use the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) to deploy your server. Remember to [provision Postgres](https://devcenter.heroku.com/articles/provisioning-heroku-postgres) and [set your config vars (envoirnment variables)](https://devcenter.heroku.com/articles/config-vars).
+
+1. Create the users table in your database and add the [pgcrypto encryption extension](https://www.postgresql.org/docs/current/pgcrypto.html) by running the seed file:
+
+   `$ heroku run node ./seed.js`
 
 1. Copy the Heroku url and paste it in the Bot endpoint URL input on your Zoom App's Features section. Remember to include `/unsplash` path.
 
