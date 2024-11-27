@@ -7,7 +7,11 @@ const crypto = require('crypto')
 const { Client } = require('pg')
 const pg = new Client({
   connectionString:  process.env.DATABASE_URL,
-  ssl: process.env.NODE_ENV === 'production' ? true : false
+  // ssl: {
+  //   rejectUnauthorized: false,
+  // }
+  // ssl: process.env.NODE_ENV === 'production' ? true : false
+  sslmode: process.env.NODE_ENV === "production" ? "require" : "disable"
 })
 
 pg.connect().catch((error) => {
