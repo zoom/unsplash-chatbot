@@ -9,9 +9,9 @@ const pg = new Client({
   connectionString:  process.env.DATABASE_URL,
   // ssl: {
   //   rejectUnauthorized: false,
-  // }
+  // },
   // ssl: process.env.NODE_ENV === 'production' ? true : false
-  sslmode: process.env.NODE_ENV === "production" ? "require" : "disable"
+  // sslmode: process.env.NODE_ENV === "production" ? "require" : "disable"
 })
 
 pg.connect().catch((error) => {
