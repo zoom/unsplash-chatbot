@@ -3,7 +3,10 @@ require('dotenv').config()
 const { Client } = require('pg')
 const pg = new Client({
   connectionString:  process.env.DATABASE_URL,
-  ssl: process.env.NODE_ENV === 'production' ? true : false
+  ssl: process.env.NODE_ENV === 'production' ? {
+    require: process.env.NODE_ENV === 'production' ? true : false,
+    rejectUnauthorized: false
+  } : false
 })
 
 pg.connect().catch((error) => {
