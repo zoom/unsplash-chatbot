@@ -12,6 +12,10 @@ const pg = new Client({
   // },
   // ssl: process.env.NODE_ENV === 'production' ? true : false
   // sslmode: process.env.NODE_ENV === "production" ? "require" : "disable"
+  ssl: process.env.NODE_ENV === 'production' ? {
+    require: process.env.NODE_ENV === 'production' ? true : false,
+    rejectUnauthorized: false
+  } : false
 })
 
 pg.connect().catch((error) => {
