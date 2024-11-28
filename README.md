@@ -133,7 +133,7 @@ In terminal, run the following command to clone the repo:
 
 1. Create the users table in your database and add the [pgcrypto encryption extension](https://www.postgresql.org/docs/current/pgcrypto.html) by running the seed file:
 
-   `$ heroku run node ./seed.js`
+   `$ heroku run node seed.js`
 
 1. Copy the Heroku url and paste it in the Bot endpoint URL input on your Zoom App's Features section. Remember to include `/unsplash` path.
 

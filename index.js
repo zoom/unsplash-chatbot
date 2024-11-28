@@ -111,38 +111,30 @@ app.post('/unsplash', (req, res) => {
 // helper functions:
 
 function getUser(payload) {
-  console.log(payload)
+  pg.query(`SELECT PGP_SYM_DECRYPT(access_token::bytea, '${process.env.DATABASE_ENCRYPTION_KEY}') as access_token, PGP_SYM_DECRYPT(expires_on::bytea, '${process.env.DATABASE_ENCRYPTION_KEY}') as expires_on FROM users WHERE PGP_SYM_DECRYPT(account_id::bytea, '${process.env.DATABASE_ENCRYPTION_KEY}') = '${payload.accountId}';`, (error, results) => {
+    if (error) {
+      console.log('Error selecting user from database.', error)
+    } else {
+      if(results.rows.length) {
 
-  try {
-    pg.query(`SELECT PGP_SYM_DECRYPT(access_token::bytea, '${process.env.DATABASE_ENCRYPTION_KEY}') as access_token, PGP_SYM_DECRYPT(expires_on::bytea, '${process.env.DATABASE_ENCRYPTION_KEY}') as expires_on FROM users WHERE PGP_SYM_DECRYPT(account_id::bytea, '${process.env.DATABASE_ENCRYPTION_KEY}') = '${payload.accountId}';`, (error, results) => {
-      if (error) {
-        console.log('Error selecting user from database.', error)
-      } else {
-        if(results.rows.length) {
-  
-          console.log('User exists.')
-  
-          if(results.rows[0].expires_on > (new Date().getTime() / 1000)) {
-            console.log('User access token active.')
-  
-            getPhoto(results.rows[0].access_token, payload)
-          } else {
-            console.log('User access token expired.')
-  
-            getAccessToken(payload, true)
-          }
+        console.log('User exists.')
+
+        if(results.rows[0].expires_on > (new Date().getTime() / 1000)) {
+          console.log('User access token active.')
+
+          getPhoto(results.rows[0].access_token, payload)
         } else {
-          console.log('User does not exist.')
-  
-          getAccessToken(payload, false)
-        }
-      }
-    })
-  } catch (error) {
-    console.log(error)
-  }
+          console.log('User access token expired.')
 
-  
+          getAccessToken(payload, true)
+        }
+      } else {
+        console.log('User does not exist.')
+
+        getAccessToken(payload, false)
+      }
+    }
+  })
 }
 
 function deleteUser(payload) {
